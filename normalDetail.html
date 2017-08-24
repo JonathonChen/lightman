@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="keywords" content="好骑网自行车" />
+    <meta name="description" content="好骑网自行车" />
+    <meta name="author" content="PM : Jon | Email:328117005@qq.com">
+    <meta name="robots" content="index,follow">
+    <title>公司名称</title>
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/normalize.css">
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/iconfont.css">
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/animate.css">
+    <link rel="stylesheet" href="http://ov5eewsja.bkt.clouddn.com/css/lightman.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://ov5eewsja.bkt.clouddn.com/js/html5shiv.min.js"></script>
+      <script src="http://ov5eewsja.bkt.clouddn.com/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body data-spy="scroll" data-target="#prMenuBox" style="position: relative;">
+    <!--顶部-->
+    <div class="index-box navbar-fixed-top" id="topMainMenu">
+        <div class="container index-topmenu-bg">
+            <div class="row">
+                <div class="col-md-3 col-xs-6 index-logo">
+                    <a href="index.html">
+                        <img src="http://ov5eewsja.bkt.clouddn.com/images/logo.png" class="img-responsive" />
+                    </a>                    
+                </div>
+                <div class="col-md-5 index-menu-list hidden-sm hidden-xs">
+                    <div class="navList" v-for="item in menuList">
+                        <a v-bind:href="item.surl"  v-on:mouseenter="showMenu(item.mid);" v-if="item.canPCShow">
+                            {{item.mtext}}                        
+                        </a>
+                        <transition
+                            name="MC03-transition"
+                            enter-active-class="animated fadeIn"
+                            leave-active-class="animated fadeOut"
+                        >
+                        <div class="index-menu-sublist" v-if="item.canSee" v-on:mouseleave="item.canSee = false">                            
+                            <ul>
+                                <li v-for="sub in item.subList"><a v-bind:href="sub.subUrl">{{sub.subTitle}}</a></li>
+                            </ul>                            
+                        </div>
+                        </transition>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <div class="col-xs-10 col-md-6 search-box" id="topSearch">
+                        <a href="javascript:void(0);" v-on:click="showSearchBox = !showSearchBox" class="iconfont search-box">&#xe612;</a>
+                        <transition
+                            name="MC01-transition"
+                            enter-active-class="animated bounceInRight"
+                            leave-active-class="animated bounceOutRight"
+                        >
+                        <div class="search-input-box" id="searchbox" v-if="showSearchBox">
+                            <form action="#" method="get">
+                                <input type="text" placeholder="请输入关键词" id="searchkey">
+                            </form>
+                        </div>
+                        </transition>
+                    </div>
+                    <div class="col-xs-4 col-md-4 index-jd-box hidden-sm hidden-xs">
+                        <a href="#">
+                            京东商城
+                            <img src="http://ov5eewsja.bkt.clouddn.com/images/buycarIco.png" />
+                        </a>                        
+                    </div>
+                    <div class="col-xs-2 hidden-lg hidden-md mobile-topmenu-box">
+                        <a href="javascript:void(0);" class="iconfont mobile-topmenu-ico" id="mobileMenu" v-on:click="mobileMenu.changMenuIco();" v-html="mobileMenuIco"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--菜单栏-->
+    <div id="subMenu1">
+        <transition
+            name="MC02-transition"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+        >
+        <div class="index-menu-box navbar-fixed-top" v-if="isShow" v-on:mouseleave="isShow=false">
+            <div class="container" style="padding-top:20px;">
+                <div class="col-md-9 menuList">
+                    <!--绑定菜单数据-->
+                    <dl v-for="item in sunmenu">
+                        <dt>{{item.mtitle}}</dt>
+                        <dd v-for="dd in item.mdd">
+                            <a v-bind:href="dd.murl" v-on:mouseover="showtips(dd.mdesc,dd.mimg,dd.mtitle);">{{dd.mtitle}}</a>
+                        </dd>
+                    </dl>
+                </div>
+                <!--右侧简介及图片-->
+                <div class="col-md-3 tipsBox">
+                    <div class="tipsDesc">
+                        <div v-text="descTitle" class="rightDescTitle"></div>
+                        <div v-html="menudesc" class="rightDescText"></div>
+                    </div>                
+                    <div class="tipsImages">
+                        <img v-bind:src="menuimg" class="img-responsive" />
+                    </div>
+                </div>
+                <div class="col-md-12 allproducts">
+                    <div class="showallbtn">
+                        <a href="products.html">全部产品</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </transition>
+    </div>
+    <div id="subMenu2">
+        <transition
+            name="MC03-transition"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+        >
+        <div class="index-menu-box navbar-fixed-top" v-if="isShow" v-on:mouseleave="isShow=false">
+            <div class="container" style="padding-top:20px;">
+                <div class="col-md-3 newP_tipsBox" v-for="np in newProList">
+                    <a v-bind:href="np.npUrl" v-on:mouseover="">
+                        <div class="newP_tipsDesc">
+                            <div v-text="np.npTitle" class="newP_rightDescTitle"></div>
+                            <div v-html="np.npDesc" class="newP_rightDescText"></div>
+                        </div>                
+                        <div class="newP_tipsImages">
+                            <img v-bind:src="np.npImg" class="img-responsive" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </transition>
+    </div>
+    
+    <!--产品形象大图-->
+    <div class="products-showBox" id="products-showBox">
+        <!--形象图-->
+        <div class="pro-show-imgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/banner1.png" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/p-t16r-13_v.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="color: #58B7FF;font-size: 30px;line-height: 60px;font-weight:600;" data-wow-duration="1s" data-wow-delay="0s">C13R</div>
+            <div class="wow bounceInRight" style="font-size: 36px;line-height: 60px;font-weight:600;" data-wow-duration="1s" data-wow-delay="0.5s">多功能一键开关</div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 50px;" data-wow-duration="1s" data-wow-delay="0.8s">380流明 USB智能充电系统手电</div>
+            <div class="pt4 wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.2s"><a href="normalDetail.html">产品详情</a></div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:5%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="color: #58B7FF;font-size: 32px;font-weight: 600;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">C13R</h3>
+            <h2 class="wow bounceInUp" style="font-size: 26px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0.5s">多功能一键开关</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s"><a href="normalDetail.html" style="border-bottom: 1px solid #0da851;padding-bottom: 10px;">产品详情</a></p>
+        </div>
+    </div>
+    <!--产品详情页菜单-->
+    <div class="pro-menu-box" id="prMenuBox">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 proTitle hidden-xs hidden-sm">                    
+                    IN GRO
+                </div>
+               <div class="col-md-6 proMenu nav">
+                    <li class="active"><a class="xiangqing" href="#xiangqing">详情</a></li>
+                    <li><a class="maidian" href="#maidian">卖点</a></li>
+                    <li><a class="shiyong" href="#shiyong">使用</a></li>
+                    <li><a class="canshu" href="#canshu">参数</a></li>
+                    <li><a class="peijian" href="#peijian">配件</a></li>
+                    <li class="index-jdp-box">
+                        <a href="https://item.taobao.com/item.htm?id=554522024843" target="view_window">
+                            <span class="hidden-xs">购买</span>
+                            <img src="http://ov5eewsja.bkt.clouddn.com/images/buycarIco.png">
+                        </a>  
+                    </li>
+                    <li class="index-lang-box">
+                        <a href="javascript:pageScroll();" class="hidden-xs">回到顶部</a>
+                        <a href="javascript:pageScroll();" class="hidden-sm hidden-md hidden-lg">TOP</a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--产品详情-->
+    <div class="p-detailBox" id="xiangqing">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-001.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-001_s.jpg" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#000;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                全金属机身·小巧精致·隐秘之至
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/line001.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                ELEGANT COPPER EDITION
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                让人惊叹的三围，比其它同类产品体积至少减少20%<br/>
+                筒身紧凑，单手操作，隐秘性极强<br/>
+                可随身携带，小巧精品，工艺缔造品质。
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6f5;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6f4;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe703;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;top:5%;text-align:center;position: absolute;color: #000;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/line001.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+        </div>
+        
+    </div>
+    <!--产品详情2-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-002.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-002_s.jpg" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                全球通用Micro-USB充电接口
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                ULTRA-COMPACT DESIGN,FITS EASILY INTO A POCKET
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                设计精美、精选高品质材料制作防护盖<br />
+                于筒体紧密贴合，全方位守护<br />
+                适应各类恶劣环境 防沙、防尘、防水、防腐蚀<br />
+                Micro-USB接口 
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6ff;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6fe;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 20px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;line-height:50px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+            <div class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:40px;color:#20A0FF;">&#xe6ff;</span>
+                <span class="iconfont" style="font-size:40px;color:#20A0FF;">&#xe6fe;</span>
+            </div>
+        </div>
+        
+    </div>
+    <!--产品详情3-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-003.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-003_s.jpg" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aR hidden-xs" style="width:80%;overflow:hidden;top:20%;right:10%;text-align:right;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                全球通用Micro-USB充电接口
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat right bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                ULTRA-COMPACT DESIGN,FITS EASILY INTO A POCKET
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                设计精美、精选高品质材料制作防护盖<br />
+                于筒体紧密贴合，全方位守护<br />
+                适应各类恶劣环境 防沙、防尘、防水、防腐蚀<br />
+                Micro-USB接口 
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6e8;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 20px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;line-height:50px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+            <div class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:50px;color:#20A0FF;">&#xe6e8;</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!--产品详情4-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-004.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-004_s.jpg" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#000;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                智能USB充电系统
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/line001.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                LIGHT EMITTER
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                全球通用Micro-USB接口，可以使用可靠的充电宝进行充电<br />
+                智能控制芯片，恒速稳定充电，加载防过冲、过放程序， 有效提升电池<br />
+                C13R低亮档  （10流明，续航60小时 )<br />
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe71f;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe71a;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/line001.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+            <div class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:50px;color:#20A0FF;">&#xe71f;</span>
+                <span class="iconfont" style="font-size:50px;color:#20A0FF;">&#xe71a;</span>
+            </div>
+        </div>
+        
+    </div>
+    <!--产品详情5-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-005.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-005_s.jpg" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                全球通用Micro-USB充电接口
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                ULTRA-COMPACT DESIGN,FITS EASILY INTO A POCKET
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                设计精美、精选高品质材料制作防护盖<br />
+                于筒体紧密贴合，全方位守护<br />
+                适应各类恶劣环境 防沙、防尘、防水、防腐蚀<br />
+                Micro-USB接口 
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6e1;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+            <div class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:50px;color:#20A0FF;">&#xe6e1;</span>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!--产品卖点部分-->
+    <div class="cpmd" id="maidian">
+        <div class="container">
+            <!--卖点标题-->
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="cpmd-title">C13R 产品卖点</div>
+                    <div>首页/产品中心/C13R/卖点</div>
+                </div>
+                <div class="col-xs-3 cpmd-titleIco">
+                    <span class="iconfont">&#xe61e;</span>
+                </div>
+            </div>
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+        </div>
+    </div>
+    <div class="cpmd2">
+        <div class="container">
+            <!--卖点列表-->
+            <div class="row cpmdList">
+                <ul>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        采用一颗Cree XM-L2 U3 LED，寿命均长达50,000小时
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        侧按开关，档位亮度和续航如下 极亮档
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        恒流电路，亮度恒定
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        使用一节CR123A（16340/18350）
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        工作电压：2.8~4.2V
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        体积： 78mm (长) x 32mm(头部直径)x 25mm（尾部直径）
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        重量： 72.8g（不含电池）	
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        采用航天级铝合金制造，头部不锈钢压环
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        军规三级硬质氧化
+                    </li>
+                    <li class="col-xs-12 col-sm-6">
+                        <span class="iconfont"></span>
+                        附件：防水O圈、手绳、电池套管
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!--产品卖点图片1-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-006.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-1.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                供电系统
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                AS LOW AS 30ΜA STANDBY CURRENT
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                使用体积小巧的单节<br />
+                CR123A(16340,18350)电池<br />
+                恒流电路，亮度恒定，不闪烁，不伤眼，人性化照明
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6ff;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6fe;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+        </div>        
+    </div>
+    <!--产品卖点图片2-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-007.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-2.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                供电系统
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                AS LOW AS 30ΜA STANDBY CURRENT
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                使用体积小巧的单节<br />
+                CR123A(16340,18350)电池<br />
+                恒流电路，亮度恒定，不闪烁，不伤眼，人性化照明
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6ff;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6fe;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+        </div>        
+    </div>
+    <!--产品卖点图片3-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-008.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-3.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aR hidden-xs" style="width:80%;overflow:hidden;top:20%;right:10%;text-align:right;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                符合IPX-8防水标准
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat right bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                CONVEX LENS WITH AS HIGH 
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                满足EDC携带、近距柔光照明、闲情自驾等<br />
+                多种照明需求<br />
+                还可以作为馈赠之佳品
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6ff;</span>
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6fe;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:0;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全金属机身·小巧精致·隐秘之至</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">ELEGANT COPPER EDITION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                让人惊叹的三围，比其它同类产品体积至少减少20% 筒身紧凑，单手操作，隐秘性极强 可随身携带，小巧精品，工艺缔造品质
+            </p>
+        </div>        
+    </div>
+    <!--产品卖点图片4-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-009.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-4.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aL hidden-xs" style="width:80%;overflow:hidden;top:20%;left:10%;text-align:left;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                全球一流智能记忆芯片
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat left bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                CONVEX LENS WITH AS HIGH AS
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                自动记忆上次关机时的亮度，贴心呵护
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6e6;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:40%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全球一流智能记忆芯片</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">CONVEX LENS WITH AS HIGH AS</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                自动记忆上次关机时的亮度，贴心呵护
+            </p>
+        </div>        
+    </div>
+    <!--产品卖点图片5-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-010.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-5.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aC hidden-xs" style="width:100%;overflow:hidden;top:10%;text-align:center;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                贴心体验
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                CONVEX LENS WITH
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                产品随机附送一电池仓，能有效防止电池晃动<br/>
+                新一代、更加可靠的电子防<br/>
+                反接电路，即使无意装反电池，手电绝不损伤<br/>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:40%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">全球一流智能记忆芯片</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">CONVEX LENS WITH AS HIGH AS</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+                自动记忆上次关机时的亮度，贴心呵护
+            </p>
+        </div>        
+    </div>
+
+    <!--产品使用说明-->
+    <div class="cpmd">
+        <div class="container">
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="cpmd-title">C13R 使用说明</div>
+                    <div>首页/产品中心/C13R/使用</div>
+                </div>
+                <div class="col-xs-3 cpmd-titleIco">
+                    <span class="iconfont">&#xe61f;</span>
+                </div>
+            </div>
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+        </div>
+    </div>
+    <div class="cpmd2">
+        <div class="container">
+            <div class="row usegrid">
+                <div class="col-xs-12 col-sm-9 usegrid-txt">
+                    一、开启/关闭手电筒 <br/>
+                    1、开启手电筒：按下侧按开关，听到一声轻响，手电开启； <br/>
+                    2、关闭手电筒：不论是何种亮度模式下，再次按下侧按开关，听到一声轻响，手电筒关闭。<br/>
+                    二、调光方法 <br/>
+                    1、手电分极高、高、中、 低、爆闪、SOS、航闪、月光模式八档；<br/>
+                    2、单击起动侧按开关为极高档，长按克调出高、中、低三档；<br/>
+                    3、当手电在极高、高、中、低档任意一档点亮时，双击可调出爆闪，此时长按克调出SOS，此时再次长按克调出航闪，依次循环；<br/>
+                    4、月光模式说明：在关机且未锁键的情况下长按关机进入月光模式，再按进入普通调光。<br/>
+                    5、手电按键锁定功能。<br/>
+                    *短按一次按键，再迅速长按（两秒以内），LED闪烁一次，即可锁定按键，解锁亦然；<br/>
+                </div>
+                <div class="col-xs-12 col-sm-3 usegrid-ico">
+                    <span class="iconfont">&#xe620;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--使用说明展示图片1-->
+    <div class="p-detailBox" id="shiyong">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-011.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-6.png" class="img-responsive visible-xs-inline">
+        </div>       
+    </div>
+    <!--使用说明展示图片2-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-012.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-7.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aR hidden-xs" style="width:80%;overflow:hidden;top:20%;right:10%;text-align:right;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                自锁功能操作方法
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat right bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                LOCKING FUNCTION
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                短按一次按键、再迅   速长按（两秒以内）<br />
+                LED闪烁一次，即可锁定按键，解锁亦然。防止手电置于口袋、旅行   袋、背包中<br />
+                具有自锁功能。防止误操作，保证使用 安全尾部平整<br />
+                可以倒立与水面，充当蜡烛使用。<br />
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe6e3;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:20%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">自锁功能操作方法</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">LOCKING FUNCTION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+               短按一次按键、再迅   速长按（两秒以内）
+            </p>
+        </div>    
+    </div>
+    <!--使用说明展示图片3-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-013.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-1.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aC hidden-xs" style="width:100%;overflow:hidden;top:10%;text-align:center;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                便携、快充、小巧
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                LOCKING FUNCTION
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+                C13R优化电路设计，强势兼容16340、18350充电电池<br/>
+                 充电电流稳定，有效提升16340、18350电池寿命<br/>
+            </div>
+        </div>      
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:20%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">便携、快充、小巧</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">LOCKING FUNCTION</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+               充电电流稳定，有效提升16340、18350电池寿命
+            </p>
+        </div>    
+    </div>
+    <!--使用说明展示图片4-->
+    <div class="p-detailBox">
+        <!--图片部分-->
+        <div class="p-detailImgBox">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/C13R-014.jpg" class="img-responsive hidden-xs">
+            <img data-original="http://ov5eewsja.bkt.clouddn.com/images/m-T16R-2.png" class="img-responsive visible-xs-inline">
+        </div>
+        <!--文字动画框PC|直接style 到时此样式由后台程序输出控制，不固定样式-->
+        <div class="aR hidden-xs" style="width:80%;overflow:hidden;top:20%;right:10%;text-align:right;position:absolute;color:#fff;">
+            <div class="wow bounceInUp" style="font-size: 26px;" data-wow-duration="1s" data-wow-delay="0s">
+                Micro-USB充电接口
+            </div>
+            <div class="wow bounceInRight" style="font-size: 20px;line-height: 60px; background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat right bottom" data-wow-duration="1s" data-wow-delay="0.5s">
+                LOCKING FUNCTIO N
+            </div>
+            <div class="wow bounceInRight" style="font-size: 14px;line-height: 25px;margin-top:20px;" data-wow-duration="1s" data-wow-delay="0.8s">
+               充电状态红色灯亮，充满电， 绿色指示灯亮<br />
+            </div>
+            <div class="hidden-xs hidden-sm wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.3s">
+                <span class="iconfont" style="font-size:80px;color:#20A0FF;">&#xe715;</span>
+            </div>
+        </div>       
+        <!--文字动画框手机-->
+        <div class="visible-xs-inline" style="width:100%;overflow:hidden;bottom:20%;text-align:center;position: absolute;color: #fff;">
+            <h3 class="wow bounceInUp" style="font-size: 18px;margin-top: 0;" data-wow-duration="1s" data-wow-delay="0s">Micro-USB充电接口</h3>
+            <h2 class="wow bounceInUp" style="font-size: 16px;margin-top: 0;line-height:40px;background:url(http://ov5eewsja.bkt.clouddn.com/images/slbg01.jpg) no-repeat center bottom" data-wow-duration="1s" data-wow-delay="0.5s">LOCKING FUNCTION N</h2>
+            <p class="wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.8s" style="padding-left:10px;padding-right:10px;">
+               充电状态红色灯亮，充满电， 绿色指示灯亮
+            </p>
+        </div>    
+    </div>
+
+    <!--产品参数-->
+    <div class="cpmd" id="canshu">
+        <div class="container">
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="cpmd-title">C13R 产品参数</div>
+                    <div>首页/产品中心/C13R/参数</div>
+                </div>
+                <div class="col-xs-3 cpmd-titleIco">
+                    <span class="iconfont">&#xe621;</span>
+                </div>
+            </div>
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+        </div>
+    </div>
+    <div class="cpmd2">
+        <div class="container">
+            <div class="row proDetail-imgbox">
+                <div class="col-xs-12" style="text-align:center;">
+                    <img src="http://ov5eewsja.bkt.clouddn.com/images/C13R-000.jpg" class="img-responsive" style="display:inline;">
+                </div>
+            </div>
+            <div class="row proDetail">
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe636;</i>
+                    <span>头部直径 31.8毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe636;</i>
+                    <span>头部直径 31.8毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe636;</i>
+                    <span>头部直径 31.8毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 detailList">
+                    <i class="iconfont">&#xe634;</i>
+                    <span>筒身长度111毫米 / 4.37英寸</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--产品配件-->
+    <div class="cpmd" id="peijian">
+        <div class="container">
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="cpmd-title">C13R 产品配件</div>
+                    <div>首页/产品中心/C13R/配件</div>
+                </div>
+                <div class="col-xs-3 cpmd-titleIco">
+                    <span class="iconfont">&#xe622;</span>
+                </div>
+            </div>
+            <div class="row hidden-xs" style="height:50px;"></div>
+            <div class="row visible-xs-block" style="height:20px;"></div>
+        </div>
+    </div>
+    <div class="cpmd2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <img src="http://ov5eewsja.bkt.clouddn.com/images/C13R-000x.jpg" class="img-responsive">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--底部分类翻转-->
+    <div class="nPmd-six-box hidden-xs hidden-sm">
+        <div class="container-fluid">
+            <div class="row" id="sixNav">
+
+                <div class="col-md-2 six-part" v-for="(v, k) in list" @mouseenter="enterAction(k);" @mouseleave="leaveAction(k);">
+                    <div class="sixFront animated" :class="{flipInY:v.frontState,flipOutY:v.backState}" :id="'s-'+(k+1)+'-1'">
+                        <a :href="v.linkUrl"><img :src="v.frontImg" class="img-responsive"></a>
+                    </div>
+                    <div class="sixBack animated" :class="{flipInY:v.backState,flipOutY:!v.backState}" :id="'s-'+(k+1)+'-2'">
+                        <a :href="v.linkUrl"><img :src="v.backImg" class="img-responsive"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="nP-six-box hidden-md hidden-lg" id="wrapper">
+        <div class="np-scroller" id="scroller">
+            <ul>
+                <li v-for="mc in list" @click="goUrl(mc.linkUrl);"><img :src="mc.frontImg" class="img-responsive"></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--底部共用-->
+    <div class="public-bottom" id="publicBottom">
+        <div class="container-fluid">
+            <!--搜索框-->
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2 public-bottom-searchBox">
+                    <form action="#" method="get">
+                        <input type="text" name="bottomsearch" id="bottomsearch" placeholder="请输入关键词搜索......" />
+                        <input type="submit" value="SIGN UP">
+                    </form>                    
+                </div>
+            </div>            
+        </div>
+        <div class="container">
+            <!--底部导航栏-->
+            <div class="row public-bottom-navBox">
+                <div class="col-xs-12 col-md-10 listBNav">
+                    <dl v-for="dlitem in btNavList">
+                        <dt><a v-bind:href="dlitem.dtUrl">{{dlitem.dtTitle}}</a></dt>
+                        <dd v-for="dditem in dlitem.ddLits" v-bind:class="hideClass"><a v-bind:href="dditem.ddUrl">{{dditem.ddName}}</a></dd>
+                    </dl>
+                   
+                </div>
+                <div class="col-xs-12 col-md-2 listBNavIco">
+                    <ul>
+                        <li v-for="icoItem in btIcoList"><a v-bind:href="icoItem.btIcoUrl"><i class="iconfont" v-html="icoItem.btIco"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="public-bottom-copyright">
+            <div class="container">
+                <div class="row" style="position:relative;">
+                    <div class="col-md-3 col-xs-12 public-bottom-logobox">
+                        <a href="index.html">
+                            <img src="http://ov5eewsja.bkt.clouddn.com/images/logo.png"  />
+                        </a>   
+                    </div>
+                    <div class="col-md-5 col-xs-12 public-bottom-copytext">
+                        Copyright © 2017 LIGHTMAN Inc. All rights reserved. 
+                    </div>
+                    <div class="col-md-4 col-xs-12 public-bottom-link">
+                        <a href="javascript:void(0)">隐私权政策</a> | 
+                        <a href="javascript:void(0)">使用条款</a> | 
+                        <a href="javascript:void(0)">免责声明</a>
+                    </div>
+                    <div class="col-md-2 hidden-xs hidden-sm hidden-md iconfont public-bottom-goIndex">
+                        <a href="index.html">&#xe76d; 返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <!--移动端菜单-->
+    <!--移动所有产品左侧菜单-->
+    <div id="mcpcenter" class="hidden-md hidden-lg">
+        <transition
+            name="MC05-transition"
+            enter-active-class="animated fadeInRight"
+            leave-active-class="animated fadeOutRight"
+        >
+        <div class="m-menuLeftBox" v-if="isM1Show">
+            <div class="cpcenter">
+                <div class="cpCenterBtn">
+                    <a href="javascript:void(0);">全部产品</a>
+                </div>
+                <dl v-for="item in sunmenu">
+                    <dt>{{item.mtitle}}</dt>
+                    <dd v-for="dd in item.mdd">
+                        <a v-bind:href="dd.murl">{{dd.mtitle}}</a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        </transition>
+    </div>
+
+    <!--移动最新产品左侧菜单-->
+    <div id="mcNpcenter" class="hidden-md hidden-lg">
+        <transition
+            name="MC05-transition"
+            enter-active-class="animated fadeInRight"
+            leave-active-class="animated fadeOutRight"
+        >
+        <div class="m-menuLeftBox" v-if="isM2Show">
+
+            <div class="newProMBox" v-for="np in newProList">
+                <div class="newProMBox-img">
+                    <img v-bind:src="np.npImg" class="img-responsive">
+                </div>
+                <div class="newProTextBox">
+                    <div class="newProTextBox-Title" v-text="np.npTitle">
+                        
+                    </div>
+                    <div class="newProTextBox-Intro" v-html="np.npDesc">
+                       
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </transition>
+    </div>
+    
+    <div class="mobileMenuDiv hidden-md hidden-lg" id="mobileNavBox">
+        <transition
+            name="MC04-transition"
+            enter-active-class="animated fadeInRight"
+            leave-active-class="animated fadeOutRight"
+        >
+        <div class="m-public-meunbox" v-if="mobileMenuShow">            
+            <!--移动端右侧菜单-->
+            <div class="m-menuRightBox">
+                <div class="menuRightNav">
+                    <ul>
+                        <!--<li v-for="item in topMneu.$data.menuList"><a v-bind:href="item.surl">{{item.mtext}}</a></li>-->
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="products.html">产品中心</a></li>
+                        <li><a href="advDetail.html">新品推荐</a></li>
+                        <li><a href="servers.html">服务与支持</a></li>
+                        <li><a href="dealers.html">经销商</a></li>
+                        <li><a href="aboutus.html">关于</a></li>
+                    </ul>
+                </div>
+                <div class="m-menuRightShopBtn">
+                    <a href="#">
+                        商城
+                        <span class="iconfont">&#xe615;</span>
+                    </a>
+                </div>
+                <div class="m-menuRightLangBtn">
+                    <a href="#">
+                        语言
+                        <span class="iconfont">&#xe613;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </transition>
+    </div>
+    
+    <!--脚本-->
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/jquery.min.1.12.4.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/wow.min.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/iscroll.js"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/mc.public.js?v=2"></script>
+    <script type="text/javascript" src="http://ov5eewsja.bkt.clouddn.com/js/mc.npage.js?v=2222"></script>
+    <script>
+            // 返回页面顶部
+            function pageScroll() { 
+             $('html,body').animate({scrollTop: 0}, 500); 
+            }
+    </script>
+</body>
+</html>
